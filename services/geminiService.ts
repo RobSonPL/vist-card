@@ -1,9 +1,11 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { BusinessInfo, DesignTheme, LayoutStyle } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+// Initialize lazily to prevent module-level crashes if environment variables are missing
+const getAi = () => new GoogleGenAI({ apiKey: process.env.API_KEY as string });
 
 export const generateBusinessBio = async (info: BusinessInfo): Promise<string> => {
+    const ai = getAi();
     const model = "gemini-2.5-flash";
     const prompt = `
         Napisz krótkie, profesjonalne bio (maksymalnie 2-3 zdania) dla wizytówki.
@@ -28,6 +30,7 @@ export const generateBusinessBio = async (info: BusinessInfo): Promise<string> =
 }
 
 export const generateCardDesigns = async (info: BusinessInfo, styleHint?: string): Promise<DesignTheme[]> => {
+  const ai = getAi();
   const model = "gemini-2.5-flash";
 
   const prompt = `
