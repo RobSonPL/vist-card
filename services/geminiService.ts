@@ -1,7 +1,7 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { BusinessInfo, DesignTheme, LayoutStyle } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
 
 export const generateBusinessBio = async (info: BusinessInfo): Promise<string> => {
     const model = "gemini-2.5-flash";
