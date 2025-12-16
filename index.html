@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrestigeCard AI - Generator Wizytówek</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEy+WSj83jCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600;800&family=Poppins:wght@300;400;600&family=Cormorant+Garamond:wght@400;600;700&family=Raleway:wght@300;400;600&family=Oswald:wght@400;600&family=Great+Vibes&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&family=DM+Serif+Display&family=Titillium+Web:wght@300;400;600&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        mono: ['Lato', 'sans-serif'],
+                        display: ['Cinzel', 'serif'],
+                        modern: ['Montserrat', 'sans-serif'],
+                        
+                        // New Fonts
+                        poppins: ['Poppins', 'sans-serif'],
+                        cormorant: ['Cormorant Garamond', 'serif'],
+                        raleway: ['Raleway', 'sans-serif'],
+                        oswald: ['Oswald', 'sans-serif'],
+                        greatvibes: ['Great Vibes', 'cursive'],
+                        librebaskerville: ['Libre Baskerville', 'serif'],
+                        sourcesans: ['Source Sans 3', 'sans-serif'],
+                        dmserif: ['DM Serif Display', 'serif'],
+                        titillium: ['Titillium Web', 'sans-serif'],
+                        spacegrotesk: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            100: '#F9F1D8',
+                            300: '#E6C673',
+                            500: '#C7A038',
+                            700: '#8A6D1F',
+                            900: '#4F3D0E',
+                        },
+                        dark: {
+                            800: '#1A1A1A',
+                            900: '#0F0F0F',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Print styles to ensure exact business card size (85mm x 55mm approx standard) */
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            body {
+                background: white;
+                margin: 0;
+                padding: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            
+            /* A4 Container Setup */
+            .print-sheet {
+                width: 210mm;
+                height: 297mm;
+                /* Top margin to center 5 rows (275mm) in 297mm = 22mm rem / 2 = 11mm */
+                padding-top: 11mm; 
+                /* Left margin to center 2 cols (170mm) in 210mm = 40mm rem / 2 = 20mm */
+                padding-left: 20mm; 
+                box-sizing: border-box;
+                display: grid;
+                grid-template-columns: repeat(2, 85mm);
+                grid-template-rows: repeat(5, 55mm);
+                gap: 0;
+            }
+
+            .business-card-print-container {
+                width: 85mm;
+                height: 55mm;
+                position: relative;
+                /* Crop marks simulation using outline for cutting guides */
+                outline: 1px dashed #e5e7eb; 
+                page-break-inside: avoid;
+            }
+            
+            .business-card-print {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+        }
+
+        /* Screen only styles */
+        @media screen {
+            .print-only {
+                display: none !important;
+            }
+        }
+
+        .business-card-preview {
+            aspect-ratio: 1.58 / 1; /* Standard card ratio */
+            transition: transform 0.3s ease;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.32.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/"
+  }
+}
+</script>
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased">
+    <div id="root"></div>
+</body>
+</html>
